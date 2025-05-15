@@ -9,9 +9,35 @@
 	</head>
 	<body>
 		<h1>Blackjack</h1>
-		<span><input type="button" id="start" value="Start Game" onclick="gameStart()" ></span>
-		<span><input type="button" id="hit" value="HIT" onclick="hit(cardsDealer)"></span>
-		<span><input type="button" id="stay" value="STAY" onclick="stay()"></span>
+		<div id="game_area">
+			<table>
+				<tr>
+					<th>
+						<h2>Your cards: </h2>
+					</th><td>
+						<b id="player_cards"></b>
+					</td><td>
+						<b id="player_status">0</b>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<h2>Dealer's cards: </h2>
+					</th><td>
+						<b id="dealer_cards"></b>
+					</td><td>
+						<b id="dealer_status">0</b>
+					</td>
+				</tr>
+			</table>
+			
+		</div>
+		<div id="button_area">
+			<span><input type="button" id="start" value="Start Game" onclick="gameStart()" ></span>
+			<span><input type="button" id="hit" value="HIT" onclick="hit(cardsPlayer)"></span>
+			<span><input type="button" id="stay" value="STAY" onclick="stay()"></span>
+			<span><input type="button" id="new" value="GIVE UP" onclick="gameStart()"></span>
+		</div>
 		<script>
 		</script>
 	</body>

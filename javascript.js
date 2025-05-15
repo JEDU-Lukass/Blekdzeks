@@ -32,23 +32,19 @@ for (let element1 of cardSymb){
 
 let cardsDealer = [];
 let cardsPlayer = [];
-
+// shuffles deck and assigns array to deck variable
+function shuffleDeck(array) {
+	array.sort(() => Math.random() - 0.5);
+	return array;
+}
 function gameStart(){
 	document.querySelector("#start").style.display = "none";
 	document.querySelector("#hit").style.display = "inline";
 	document.querySelector("#stay").style.display = "inline";
-	// shuffles deck and assigns array to deck variable
-	function shuffleDeck(array) {
-			array.sort(() => Math.random() - 0.5);
-			return array;
-	}
-
-	// dictionary of card "number" values
 
 	// create empty arrays of player and dealer cards
 	cardsDealer = [];
 	cardsPlayer = [];
-
 	// creates a shuffled deck
 	deck = shuffleDeck(deckUnshuffled);
 
@@ -60,11 +56,26 @@ function gameStart(){
 		deck.pop(deck.at(-1));
 	}
 console.log("dealer: ", cardsDealer);
-value(cardsDealer);
 console.log("player: ", cardsPlayer);
-value(cardsPlayer);
+update_values(cardsDealer);
+update_values(cardsPlayer);
 console.log("----------------------")
 
+
+}
+function update_values(cards) {
+	let player = value(cards)
+	if (player < 21) {
+		document.querySelector("#player_status").innerHTML = `Sum: ${player}`
+	}else if (player == 21 && cards.length == 2) {
+		document.querySelector("#player_status").innerHTML = `Sum: ${player}\nBLACKJACK`
+	}else if (player == 21 && cards.length > 2) {
+		document.querySelector("#player_status").innerHTML = `Sum: ${player}`
+		stay()
+	}else if (player > 21) {
+		document.querySelector("#player_status").innerHTML = `Sum: ${player}\nBUST`
+		stay()
+	}
 }
 
 // calculates the values of cards
@@ -117,23 +128,30 @@ function value(cards) {
 }
 
 function hit(cards) {
-	alert("hit pressed");
+	console.log("[DEBUG] Hit");
 	cards.push(deck.at(-1));
 	deck.pop(deck.at(-1));
 
 	console.log("dealer: ", cardsDealer);
 	console.log("player: ", cardsPlayer);
-	console.log(value(cardsDealer));
-	console.log(value(cardsPlayer));
+	if(cards == cardsPlayer){
+		document.querySelector("#player_cards").innerHTML = cards
+	}else{
+		document.querySelector("#dealer_cards").innerHTML = cards
+	}
+	update_values(cards);
 
 }
 
 function stay() {
 	// endgame
-	alert("stay")
+	console.log("[DEBUG] Stay")
+	document.querySelector("#new").value = "New Game";
 	document.querySelector("#hit").disabled = "true";
 	document.querySelector("#stay").disabled = "true";
 	console.log('------END------');
+
+	// dealer code
 
 }
 

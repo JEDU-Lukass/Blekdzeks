@@ -1,4 +1,9 @@
-input[type="button"] {
+body {
+	background-color: #ddc4c4 !important;
+	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+.btn_custom {
 	border-radius: 100vw;
 }
 

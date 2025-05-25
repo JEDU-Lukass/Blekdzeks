@@ -10,9 +10,10 @@
 let cardNr = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"];
 // array of card symbols
 // spades S (♠), hearts H (♥), diamonds D (♦), clubs C (♣)
-let cardSymb  = ["S","H","D","C"];
+let cardSymb  = ["♠","♥","♦","♣"];
 // empty array of a full deck
 let deckUnshuffled = [];
+let deck;
 
 const cardValues = {
 	"2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
@@ -37,13 +38,13 @@ function shuffleDeck(array) {
 	array.sort(() => Math.random() - 0.5);
 	return array;
 }
+
 function gameStart(){
 
 	console.log("[DEBUG] New Game")
-	document.querySelector("#new").value = "GIVE UP";
 	document.querySelector("#hit").disabled = 0;
 	document.querySelector("#stay").disabled = 0;
-	document.querySelector("#winner").display = "none";
+	document.querySelector("#winner").style.display = "none";
 
 
 	document.querySelector("#start").style.display = "none";
@@ -54,7 +55,7 @@ function gameStart(){
 	cardsDealer = [];
 	cardsPlayer = [];
 	// creates a shuffled deck
-	deck = shuffleDeck(deckUnshuffled);
+	deck = shuffleDeck([...deckUnshuffled]);
 
 	// deals cards to dealer and players from deck (sequentially from the end of the deck)
 	for (i=0;i<2;i++){
@@ -71,8 +72,8 @@ console.log("----------------------")
 document.querySelector("#player_cards").innerHTML = cardsPlayer
 document.querySelector("#dealer_cards").innerHTML = cardsDealer
 
-
 }
+
 function update_values(cards) {
 	let nameofcards
 
@@ -164,24 +165,23 @@ function hit(cards) {
 function stay() {
 	// endgame
 	console.log("[DEBUG] Stay")
-	document.querySelector("#new").value = "New Game";
 	document.querySelector("#hit").disabled = "true";
 	document.querySelector("#stay").disabled = "true";
 	console.log('------END------');
 
-	// dealer code
+	// dealer code 
 	while (value(cardsDealer) < 17){
 		hit(cardsDealer)
 	}
 
-	document.querySelector("#winner").display = "block";
+	document.querySelector("#winner").style.display = "block";
 	document.querySelector("#winner").innerHTML = `Winner = ${winner()}`;
 
 }
 
 function winner() {
-	let valueDealer = value(cardsDealer);
-	let valuePlayer = value(cardsPlayer);
+	const valueDealer = value(cardsDealer);
+	const valuePlayer = value(cardsPlayer);
 	if (valueDealer > valuePlayer && valueDealer <= 21 ){
 		return "Dealer";
 	}else if (valueDealer > 21 && valuePlayer > 21){

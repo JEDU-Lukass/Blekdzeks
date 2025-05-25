@@ -64,13 +64,12 @@ function gameStart(){
 		cardsPlayer.push(deck.at(-1));
 		deck.pop(deck.at(-1));
 	}
-console.log("dealer: ", cardsDealer);
-console.log("player: ", cardsPlayer);
+
 update_values(cardsDealer);
+document.querySelector(`#dealer_status`).innerHTML = "";
 update_values(cardsPlayer);
-console.log("----------------------")
 document.querySelector("#player_cards").innerHTML = cardsPlayer
-document.querySelector("#dealer_cards").innerHTML = cardsDealer
+document.querySelector("#dealer_cards").innerHTML = `${cardsDealer[0]},???`
 
 }
 
@@ -127,35 +126,27 @@ function value(cards) {
 		
 		// If maxSum exceeds 21, all Aces must be 1
 		if (maxSum > 21) {
-			console.log(valuesOfGivenCards);
-			console.log("sum: ", minSum);
 			return minSum;
 		}
 		// Otherwise, return both possibilities
 		else {
-			console.log(valuesOfGivenCards);
-			console.log("sum: ", minSum + " or " + maxSum);
 			return maxSum;
 		}
 	}
 	// No Aces, return normal sum
 	else {
-		console.log(valuesOfGivenCards);
-		console.log("sum: ", sum);
 		return sum;
 	}
 }
 
 function hit(cards) {
-	console.log("[DEBUG] Hit");
 	cards.push(deck.at(-1));
 	deck.pop(deck.at(-1));
-
-	console.log("dealer: ", cardsDealer);
-	console.log("player: ", cardsPlayer);
 	if(cards == cardsPlayer){
+		console.log("[DEBUG] Hit (player)");
 		document.querySelector("#player_cards").innerHTML = cards
 	}else{
+		console.log("[DEBUG] Hit (dealer)");
 		document.querySelector("#dealer_cards").innerHTML = cards
 	}
 	update_values(cards);
@@ -167,6 +158,8 @@ function stay() {
 	console.log("[DEBUG] Stay")
 	document.querySelector("#hit").disabled = "true";
 	document.querySelector("#stay").disabled = "true";
+	document.querySelector("#dealer_cards").innerHTML = cardsDealer
+	update_values(cardsDealer)
 	console.log('------END------');
 
 	// dealer code 
@@ -176,7 +169,7 @@ function stay() {
 
 	document.querySelector("#winner").style.display = "block";
 	document.querySelector("#winner").innerHTML = `Winner = ${winner()}`;
-
+	console.log(`Result: ${winner()} won`)
 }
 
 function winner() {
@@ -192,13 +185,15 @@ function winner() {
 		return "Player";
 	}else if (valueDealer < valuePlayer && valuePlayer > 21){
 		return "Dealer"
-	}else if (valueDealer == valuePlayer && valueDealer < 20){
+	}else if (valueDealer == valuePlayer && valueDealer <= 20){
 		return "Even";
 	}else if (valueDealer == valuePlayer && valueDealer == 21){
 		if (cardsDealer.length > cardsPlayer.length){
 			return "Player";
-		}else{
+		}else if (cardsDealer.length < cardsPlayer.length){
 			return "Dealer";
+		}else{
+			return "Even";
 		}
 	}
 }

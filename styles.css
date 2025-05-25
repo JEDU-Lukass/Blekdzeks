@@ -3,6 +3,21 @@ body {
 	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
 }
 
+.bg-color-table {
+	background-color: #cc6e6e;
+}
+
+.bg-color-btn {
+	background-color: #bb5151;
+}
+
+.exile-regular {
+  font-family: "Exile", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .btn_custom {
 	border-radius: 100vw;
 }

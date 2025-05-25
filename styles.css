@@ -35,6 +35,7 @@ body {
 }
 
 #new {
+	display:none;
 	background-color: rgb(201, 230, 255);
 }
 

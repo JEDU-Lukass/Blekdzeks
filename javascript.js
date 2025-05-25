@@ -50,6 +50,7 @@ function gameStart(){
 	document.querySelector("#start").style.display = "none";
 	document.querySelector("#hit").style.display = "inline";
 	document.querySelector("#stay").style.display = "inline";
+	document.querySelector(`#new`).style.display = "inline";
 
 	// create empty arrays of player and dealer cards
 	cardsDealer = [];
@@ -89,10 +90,10 @@ function update_values(cards) {
 		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}\nBLACKJACK`;
 	}else if (sumofcards == 21 && cards.length > 2) {
 		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}`;
-		stay();
+		if (cards == cardsPlayer){stay();}
 	}else if (sumofcards > 21) {
 		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}\nBUST`;
-		stay();
+		if (cards == cardsPlayer){stay();}
 	}
 }
 
@@ -159,8 +160,6 @@ function stay() {
 	document.querySelector("#hit").disabled = "true";
 	document.querySelector("#stay").disabled = "true";
 	document.querySelector("#dealer_cards").innerHTML = cardsDealer
-	update_values(cardsDealer)
-	console.log('------END------');
 
 	// dealer code 
 	while (value(cardsDealer) < 17){
@@ -170,6 +169,11 @@ function stay() {
 	document.querySelector("#winner").style.display = "block";
 	document.querySelector("#winner").innerHTML = `Winner = ${winner()}`;
 	console.log(`Result: ${winner()} won`)
+}
+
+function handleStay() {
+    stay();
+    update_values(cardsDealer);
 }
 
 function winner() {

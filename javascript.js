@@ -38,6 +38,14 @@ function shuffleDeck(array) {
 	return array;
 }
 function gameStart(){
+
+	console.log("[DEBUG] New Game")
+	document.querySelector("#new").value = "GIVE UP";
+	document.querySelector("#hit").disabled = 0;
+	document.querySelector("#stay").disabled = 0;
+	document.querySelector("#winner").display = "none";
+
+
 	document.querySelector("#start").style.display = "none";
 	document.querySelector("#hit").style.display = "inline";
 	document.querySelector("#stay").style.display = "inline";
@@ -60,21 +68,31 @@ console.log("player: ", cardsPlayer);
 update_values(cardsDealer);
 update_values(cardsPlayer);
 console.log("----------------------")
+document.querySelector("#player_cards").innerHTML = cardsPlayer
+document.querySelector("#dealer_cards").innerHTML = cardsDealer
 
 
 }
 function update_values(cards) {
-	let player = value(cards)
-	if (player < 21) {
-		document.querySelector("#player_status").innerHTML = `Sum: ${player}`
-	}else if (player == 21 && cards.length == 2) {
-		document.querySelector("#player_status").innerHTML = `Sum: ${player}\nBLACKJACK`
-	}else if (player == 21 && cards.length > 2) {
-		document.querySelector("#player_status").innerHTML = `Sum: ${player}`
-		stay()
-	}else if (player > 21) {
-		document.querySelector("#player_status").innerHTML = `Sum: ${player}\nBUST`
-		stay()
+	let nameofcards
+
+	if (cards == cardsDealer) {
+		nameofcards = "dealer";
+	}else if (cards == cardsPlayer){
+		nameofcards = "player"; 
+	}else{return}
+
+	let sumofcards = value(cards)
+	if (sumofcards < 21) {
+		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}`;
+	}else if (sumofcards == 21 && cards.length == 2) {
+		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}\nBLACKJACK`;
+	}else if (sumofcards == 21 && cards.length > 2) {
+		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}`;
+		stay();
+	}else if (sumofcards > 21) {
+		document.querySelector(`#${nameofcards}_status`).innerHTML = `Sum: ${sumofcards}\nBUST`;
+		stay();
 	}
 }
 
@@ -116,7 +134,7 @@ function value(cards) {
 		else {
 			console.log(valuesOfGivenCards);
 			console.log("sum: ", minSum + " or " + maxSum);
-			return [minSum,maxSum]
+			return maxSum;
 		}
 	}
 	// No Aces, return normal sum
@@ -152,7 +170,37 @@ function stay() {
 	console.log('------END------');
 
 	// dealer code
+	while (value(cardsDealer) < 17){
+		hit(cardsDealer)
+	}
 
+	document.querySelector("#winner").display = "block";
+	document.querySelector("#winner").innerHTML = `Winner = ${winner()}`;
+
+}
+
+function winner() {
+	let valueDealer = value(cardsDealer);
+	let valuePlayer = value(cardsPlayer);
+	if (valueDealer > valuePlayer && valueDealer <= 21 ){
+		return "Dealer";
+	}else if (valueDealer > 21 && valuePlayer > 21){
+		return "Even";
+	}else if (valueDealer > valuePlayer && valueDealer > 21){
+		return "Player";
+	}else if (valueDealer < valuePlayer && valuePlayer <= 21 ){
+		return "Player";
+	}else if (valueDealer < valuePlayer && valuePlayer > 21){
+		return "Dealer"
+	}else if (valueDealer == valuePlayer && valueDealer < 20){
+		return "Even";
+	}else if (valueDealer == valuePlayer && valueDealer == 21){
+		if (cardsDealer.length > cardsPlayer.length){
+			return "Player";
+		}else{
+			return "Dealer";
+		}
+	}
 }
 
 

@@ -1,18 +1,21 @@
+input[type="button"] {
+	border-radius: 100vw;
+}
+
 #stay {
 	display:none;
 	background-color: rgb(255, 187, 187);
-	border-radius: 100vw;
+
 }
 
 #hit {
 	display:none;
 	background-color: rgb(250, 231, 125);
-	border-radius: 100vw;
+
 }
 
-#hit:hover {
-	transition: all 0.2s ease-out;
-	background-color: rgb(236, 204, 58);
+#new {
+	background-color: rgb(201, 230, 255);
 }
 
 #stay:hover {
@@ -20,12 +23,38 @@
 	background-color: rgb(255, 90, 90);
 }
 
-#hit:active {
-	transition: all 0.02s ease-out;
-	background-color: rgb(255, 250, 201);
+#hit:hover {
+	transition: all 0.2s ease-out;
+	background-color: rgb(236, 204, 58);
+}
+
+#new:hover {
+	transition: all 0.2s ease-out;
+	background-color: rgb(137, 198, 252);
+}
+
+#start:hover {
+	transition: all 0.2s ease-out;
+	background-color: rgb(186, 255, 184);
 }
 
 #stay:active {
 	transition: all 0.02s ease-out;
 	background-color: rgb(255, 201, 201);
+}
+
+#hit:active {
+	transition: all 0.02s ease-out;
+	background-color: rgb(255, 250, 201);
+}
+
+
+#new:active {
+	transition: all 0.02s ease-out;
+	background-color: rgb(201, 230, 255);
+}
+
+#start:active {
+	transition: all 0.02s ease-out;
+	background-color: rgb(209, 255, 219);
 }

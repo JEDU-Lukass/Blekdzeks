@@ -160,6 +160,7 @@ function stay() {
 	document.querySelector("#hit").disabled = "true";
 	document.querySelector("#stay").disabled = "true";
 	document.querySelector("#dealer_cards").innerHTML = cardsDealer
+	document.querySelector(`#dealer_status`).innerHTML = `Sum: ${value(cardsDealer)}`;
 
 	// dealer code 
 	while (value(cardsDealer) < 17){
